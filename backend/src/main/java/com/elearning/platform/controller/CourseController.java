@@ -1,0 +1,45 @@
+package com.elearning.platform.controller;
+
+import com.elearning.platform.entity.Course;
+import com.elearning.platform.service.CourseService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/courses")
+@RequiredArgsConstructor
+public class CourseController {
+    private final CourseService courseService;
+
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
+    @GetMapping
+    public List<Course> getAllCourses() {
+        return courseService.getAllCourses();
+    }
+
+    @PostMapping
+    public Course createCourse(@RequestBody Course course) {
+        return courseService.addCourse(course);
+    }
+
+    @PutMapping("/{id}")
+    public Course updateCourse(@PathVariable String id, @RequestBody Course course) {
+        course.setId(id);
+        return courseService.updateCourse(course);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCourse(@PathVariable String id) {
+        courseService.deleteCourse(id);
+    }
+
+    @PostMapping("/{id}/approve")
+    public Course approveCourse(@PathVariable String id) {
+        return courseService.approveCourse(id);
+    }
+}
