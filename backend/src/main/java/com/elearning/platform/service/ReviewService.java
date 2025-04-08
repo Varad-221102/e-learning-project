@@ -1,4 +1,4 @@
-package com.elearning.service;
+package com.elearning.platform.service;
 
 import com.elearning.platform.entity.Course;
 import com.elearning.platform.entity.Review;
@@ -23,18 +23,22 @@ public class ReviewService {
     public Review addReview(Review review) {
         Review savedReview = reviewRepository.save(review);
 
-        // Calculate average rating
-        List<Review> reviews = reviewRepository.findByCourseId(review.getCourseId());
-        double avg = reviews.stream().mapToInt(Review::getRating).average().orElse(0.0);
+        // Calculate average rating for the course
+        List<Review> reviews = reviewRepository.findByCourseId(review.getCourseID());
+        double avg = reviews.stream()
+                .mapToInt(Review::getRating)
+                .average()
+                .orElse(0.0);
 
-        Course course = courseRepository.findById(review.getCourseId()).orElseThrow();
+        Course course = courseRepository.findById(review.getCourseID())
+                .orElseThrow(() -> new RuntimeException("Course not found with ID: " + review.getCourseID()));
         course.setAverageRating(avg);
         courseRepository.save(course);
 
         return savedReview;
     }
 
-    public List<Review> getReviewsByCourseId(String courseId) {
-        return reviewRepository.findByCourseId(courseId);
+    public List<Review> getReviewsByCourseId(String courseID) {
+        return reviewRepository.findByCourseId(courseID);
     }
 }

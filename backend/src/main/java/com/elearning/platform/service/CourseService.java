@@ -1,4 +1,4 @@
-package com.elearning.service;
+package com.elearning.platform.service;
 
 import com.elearning.platform.entity.Course;
 import com.elearning.platform.repository.CourseRepository;
