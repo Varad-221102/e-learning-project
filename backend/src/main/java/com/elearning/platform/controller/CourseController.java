@@ -3,19 +3,16 @@ package com.elearning.platform.controller;
 import com.elearning.platform.entity.Course;
 import com.elearning.platform.service.CourseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
-@RequiredArgsConstructor
 public class CourseController {
-    private final CourseService courseService;
-
-    public CourseController(CourseService courseService) {
-        this.courseService = courseService;
-    }
+    @Autowired
+    private CourseService courseService;
 
     @GetMapping
     public List<Course> getAllCourses() {
@@ -23,14 +20,13 @@ public class CourseController {
     }
 
     @PostMapping
-    public Course createCourse(@RequestBody Course course) {
+    public Course addCourse(@RequestBody Course course) {
         return courseService.addCourse(course);
     }
 
     @PutMapping("/{id}")
     public Course updateCourse(@PathVariable String id, @RequestBody Course course) {
-        course.setId(id);
-        return courseService.updateCourse(course);
+        return courseService.updateCourse(id, course);
     }
 
     @DeleteMapping("/{id}")

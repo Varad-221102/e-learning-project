@@ -4,41 +4,32 @@ import com.elearning.platform.entity.Course;
 import com.elearning.platform.entity.Review;
 import com.elearning.platform.repository.CourseRepository;
 import com.elearning.platform.repository.ReviewRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ReviewService {
-    private final ReviewRepository reviewRepository;
-    private final CourseRepository courseRepository;
+    @Autowired private ReviewRepository reviewRepo;
+    @Autowired
+    private CourseRepository courseRepo;
 
-    public ReviewService(ReviewRepository reviewRepository, CourseRepository courseRepository) {
-        this.reviewRepository = reviewRepository;
-        this.courseRepository = courseRepository;
+    public Review submitReview(Review review) {
+        Review saved = reviewRepo.save(review);
+        updateCourseRating(review.getCourseId());
+        return saved;
     }
 
-    public Review addReview(Review review) {
-        Review savedReview = reviewRepository.save(review);
+    public List<Review> getReviews(String courseId) {
+        return reviewRepo.findByCourseId(courseId);
+    }
 
-        // Calculate average rating for the course
-        List<Review> reviews = reviewRepository.findByCourseId(review.getCourseID());
-        double avg = reviews.stream()
-                .mapToInt(Review::getRating)
-                .average()
-                .orElse(0.0);
-
-        Course course = courseRepository.findById(review.getCourseID())
-                .orElseThrow(() -> new RuntimeException("Course not found with ID: " + review.getCourseID()));
+    public void updateCourseRating(String courseId) {
+        List<Review> reviews = reviewRepo.findByCourseId(courseId);
+        double avg = reviews.stream().mapToInt(Review::getRating).average().orElse(0);
+        Course course = courseRepo.findById(courseId).orElseThrow();
         course.setAverageRating(avg);
-        courseRepository.save(course);
-
-        return savedReview;
-    }
-
-    public List<Review> getReviewsByCourseId(String courseID) {
-        return reviewRepository.findByCourseId(courseID);
+        courseRepo.save(course);
     }
 }

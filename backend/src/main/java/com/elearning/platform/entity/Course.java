@@ -12,6 +12,23 @@ public class Course {
     private String title;
     private String description;
     private String instructorId;
-    private boolean approved = false;
-    private double averageRating = 0.0;
+    private boolean approved;
+    private double averageRating;
+
+    public void setAverageRating(double avg) {
+    }
+
+    public Object getTitle() {
+        return true;
+    }
+
+    public double getDescription() {
+        return 0.0;
+    }
+
+    public void setTitle(Object title) {
+    }
+
+    public void setApproved(boolean b) {
+    }
 }

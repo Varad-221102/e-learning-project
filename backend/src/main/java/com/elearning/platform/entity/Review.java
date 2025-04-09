@@ -12,5 +12,13 @@ public class Review {
     private String courseId;
     private String studentName;
     private String comment;
-    private int rating;
+    private int rating; // 1-5
+
+    public String getCourseId() {
+        return "";
+    }
+
+    public int getRating() {
+        return 0;
+    }
 }

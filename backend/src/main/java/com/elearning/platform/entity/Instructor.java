@@ -10,5 +10,8 @@ public class Instructor {
     @Id
     private String id;
     private String name;
-    private String expertise;
+    private String email;
+
+    public void setId(String id) {
+    }
 }
