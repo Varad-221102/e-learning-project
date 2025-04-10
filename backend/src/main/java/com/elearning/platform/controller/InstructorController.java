@@ -2,39 +2,36 @@ package com.elearning.platform.controller;
 
 import com.elearning.platform.entity.Instructor;
 import com.elearning.platform.service.InstructorService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/instructors")
-
+@CrossOrigin(origins = "*")
 public class InstructorController {
-    private final InstructorService instructorService;
 
-    public InstructorController(InstructorService instructorService) {
-        this.instructorService = instructorService;
-    }
+    @Autowired
+    private InstructorService instructorService;
 
-    @GetMapping
-    public List<Instructor> getAll() {
-        return instructorService.getAllInstructors();
-    }
-
+    // Add Instructor
     @PostMapping
-    public Instructor add(@RequestBody Instructor instructor) {
+    public Instructor addInstructor(@Valid @RequestBody Instructor instructor) {
         return instructorService.addInstructor(instructor);
     }
 
-    @PutMapping("/{id}")
-    public Instructor update(@PathVariable String id, @RequestBody Instructor instructor) {
-        instructor.setId(id);
-        return instructorService.updateInstructor(instructor);
+    // Get All Instructors
+    @GetMapping
+    public List<Instructor> getAllInstructors() {
+        return instructorService.getAllInstructors();
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
-        instructorService.deleteInstructor(id);
+    // Get Instructor by ID
+    @GetMapping("/{id}")
+    public Optional<Instructor> getInstructorById(@PathVariable String id) {
+        return instructorService.getInstructorById(id);
     }
 }
