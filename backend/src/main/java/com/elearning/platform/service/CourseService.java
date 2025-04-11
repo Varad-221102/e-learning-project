@@ -22,9 +22,9 @@ public class CourseService {
         return courseRepo.save(course);
     }
 
-    public Course updateCourse(String id, Course updatedCourse) {
+    public Course updateCourse(String id, Course updatedCourse) throws InterruptedException {
         Course course = courseRepo.findById(id).orElseThrow();
-        course.setTitle(updatedCourse.getTitle());
+        course.wait(updatedCourse.getTitle());
         course.setAverageRating(updatedCourse.getDescription());
         return courseRepo.save(course);
     }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 //@RequiredArgsConstructor
@@ -30,5 +31,9 @@ public class InstructorService {
 
     public void deleteInstructor(String id) {
         instructorRepository.deleteById(id);
+    }
+
+    public Optional<Instructor> getInstructorById(String id) {
+        return Optional.empty();
     }
 }

@@ -22,5 +22,19 @@ public class Course {
     @NotBlank(message = "Duration is required")
     private String duration;
 
+    public long getTitle() {
+        return 0;
+    }
+
+    public Object getDescription() {
+        return null;
+    }
+
+    public void setAverageRating(Object description) {
+    }
+
+    public void setApproved(boolean b) {
+    }
+
     // Constructors, Getters, Setters Already Done
 }

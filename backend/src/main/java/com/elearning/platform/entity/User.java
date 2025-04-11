@@ -24,5 +24,21 @@ public class User {
     @NotBlank(message = "Role is required")
     private String role;
 
+    public void setUsername(String username) {
+    }
+
+    public void setEmail(String email) {
+    }
+
+    public void setRole(String role) {
+    }
+
+    public void setPassword(String encode) {
+    }
+
+    public String getPassword() {
+        return "";
+    }
+
     // Constructors, Getters, Setters Already Done
 }
