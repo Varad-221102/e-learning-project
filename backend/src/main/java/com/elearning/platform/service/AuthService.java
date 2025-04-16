@@ -1,5 +1,6 @@
 package com.elearning.platform.service;
 
+import com.elearning.platform.entity.Role;
 import com.elearning.platform.dto.LoginRequest;
 import com.elearning.platform.dto.RegisterRequest;
 import com.elearning.platform.entity.User;
@@ -22,7 +23,8 @@ public class AuthService {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
-        user.setRole(request.getRole());
+        user.setRole(Role.valueOf(request.getRole().toUpperCase()));
+
         user.setPassword(passwordEncoder.encode(request.getPassword()));  // Encrypt Password
         return userRepository.save(user);
     }

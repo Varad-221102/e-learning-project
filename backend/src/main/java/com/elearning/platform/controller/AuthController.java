@@ -16,13 +16,13 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    // Register API
+    // Public - Anyone can register
     @PostMapping("/register")
     public User registerUser(@Valid @RequestBody RegisterRequest request) {
         return authService.registerUser(request);
     }
 
-    // Login API
+    // Public - Anyone can login
     @PostMapping("/login")
     public User loginUser(@Valid @RequestBody LoginRequest request) {
         return authService.loginUser(request);

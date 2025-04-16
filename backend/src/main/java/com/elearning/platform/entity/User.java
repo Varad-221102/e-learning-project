@@ -21,24 +21,60 @@ public class User {
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
-    @NotBlank(message = "Role is required")
-    private String role;
+    private Role role;
+
+    // Default constructor
+    public User() {
+        this.role = Role.STUDENT; // Default role
+    }
+
+    // Parameterized constructor
+    public User(String username, String email, String password, Role role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    // Getters and Setters
+    public String getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 
     public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
-    }
-
-    public void setRole(String role) {
-    }
-
-    public void setPassword(String encode) {
+        this.email = email;
     }
 
     public String getPassword() {
-        return "";
+        return password;
     }
 
-    // Constructors, Getters, Setters Already Done
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public User orElseThrow(Object userNotFound) {
+        throw new RuntimeException(userNotFound.toString());
+    }
+
 }
