@@ -36,5 +36,9 @@ public class Course {
     public void setApproved(boolean b) {
     }
 
+    public String getName() {
+        return "";
+    }
+
     // Constructors, Getters, Setters Already Done
 }
