@@ -1,0 +1,109 @@
+/* Reset default margins/paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .faq-page {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  .header {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .logo {
+    color: #0f9b8e;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+  }
+  
+  .nav .login {
+    color: #0f9b8e;
+  }
+  
+  .register-btn {
+    background-color: #0f9b8e;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 36px;
+    color: #0f9b8e;
+    margin: 40px 0 20px;
+  }
+  
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 0 40px 40px;
+  }
+  
+  .faq-card {
+    background-color: #f6f6f6;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .faq-image {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .faq-image img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background-color: #ddd;
+  }
+  
+  .pencil-icon {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+  
+  .faq-card h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0 6px;
+  }
+  
+  .faq-card p {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .footer {
+    background-color: #0f9b8e;
+    color: white;
+    padding: 30px 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+    font-size: 14px;
+  }
+  
