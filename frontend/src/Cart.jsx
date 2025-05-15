@@ -1,23 +1,27 @@
-// Cart.js
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./Cart.css";
 
 const Cart = () => {
-  // Sample cart data (replace with actual logic later)
-  const cartItems = [
-    {
-      id: 1,
-      title: "Khan academy special",
-      price: 0,
-      duration: "25mins",
-    },
-    {
-      id: 2,
-      title: "Critical Thinking Mastery",
-      price: 15,
-      duration: "40mins",
-    },
-  ];
+  const [cartItems, setCartItems] = useState([]);
+
+  // Replace this with actual user ID from localStorage/auth context
+  const userId = localStorage.getItem("userId");
+
+  const fetchCartItems = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/users/${userId}/cart`);
+      setCartItems(response.data);
+    } catch (error) {
+      console.error("Failed to fetch cart items:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (userId) {
+      fetchCartItems();
+    }
+  }, [userId]);
 
   return (
     <div className="cart-container">
@@ -30,8 +34,8 @@ const Cart = () => {
           {cartItems.map((item) => (
             <li key={item.id} className="cart-item">
               <h3>{item.title}</h3>
-              <p>Duration: {item.duration}</p>
-              <p>Price: {item.price === 0 ? "Free" : `$${item.price}`}</p>
+              <p>Duration: {item.duration || "N/A"}</p>
+              <p>Price: {item.price === 0 ? "Free" : `₹${item.price}`}</p>
             </li>
           ))}
         </ul>

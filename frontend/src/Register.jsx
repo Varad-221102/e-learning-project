@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 import './Register.css';
+
 function Register() {
   const [formData, setFormData] = useState({
     name: "",
@@ -7,6 +9,8 @@ function Register() {
     password: "",
     confirmPassword: ""
   });
+
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,15 +20,34 @@ function Register() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match!");
       return;
     }
-    // You can handle form submission here (e.g., send data to backend)
-    console.log("Form submitted:", formData);
-    alert("Registered successfully!");
+
+    try {
+      const requestBody = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+
+      const response = await axios.post("http://localhost:8080/api/auth/register", requestBody);
+
+      // Save JWT token to localStorage
+      localStorage.setItem("token", response.data.token);
+
+      alert("Registration successful!");
+      console.log("Token:", response.data.token);
+
+      // Optional: redirect to login or home page
+    } catch (err) {
+      console.error("Registration error:", err);
+      setError("Registration failed. Try again.");
+    }
   };
 
   return (
@@ -68,6 +91,8 @@ function Register() {
         />
 
         <button type="submit" className="submit-btn">Register</button>
+
+        {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
       </form>
     </div>
   );
