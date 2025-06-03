@@ -2,15 +2,14 @@ package com.elearning.platform.service;
 
 import com.elearning.platform.entity.Instructor;
 import com.elearning.platform.repository.InstructorRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-//@RequiredArgsConstructor
 public class InstructorService {
+
     private final InstructorRepository instructorRepository;
 
     public InstructorService(InstructorRepository instructorRepository) {
@@ -34,6 +33,6 @@ public class InstructorService {
     }
 
     public Optional<Instructor> getInstructorById(String id) {
-        return Optional.empty();
+        return instructorRepository.findById(id);
     }
 }

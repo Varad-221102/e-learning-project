@@ -22,23 +22,65 @@ public class Course {
     @NotBlank(message = "Duration is required")
     private String duration;
 
-    public long getTitle() {
-        return 0;
+    private double averageRating;
+
+    private boolean approved;
+
+    // --- Getters and Setters ---
+
+    public String getId() {
+        return id;
     }
 
-    public Object getDescription() {
-        return null;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setAverageRating(Object description) {
+    public String getTitle() {
+        return title;
     }
 
-    public void setApproved(boolean b) {
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getName() {
-        return "";
+    public String getDescription() {
+        return description;
     }
 
-    // Constructors, Getters, Setters Already Done
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
 }

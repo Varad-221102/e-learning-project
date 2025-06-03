@@ -2,18 +2,17 @@ package com.elearning.platform.security;
 
 import com.elearning.platform.service.CustomUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.servlet.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -33,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = null;
         String username = null;
 
-        // Extract token from header
+        // 1. Extract token from Authorization header
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
             try {
@@ -45,21 +44,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
 
-        // Validate token and set authentication
+        // 2. Validate token and authenticate
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if (jwtUtil.validateToken(token, (com.elearning.platform.entity.User) userDetails)) {
-                String role = jwtUtil.extractAllClaims(token).get("role", String.class);
-                SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
-
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, List.of(authority));
+            if (jwtUtil.validateToken(token, userDetails)) {
+                UsernamePasswordAuthenticationToken auth =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails, null, userDetails.getAuthorities());
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
 
+        // 3. Continue filter chain
         filterChain.doFilter(request, response);
     }
 }
